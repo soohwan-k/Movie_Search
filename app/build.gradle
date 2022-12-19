@@ -9,11 +9,16 @@ android {
     defaultConfig {
         applicationId "org.tech.town.gripcompany"
         minSdk 20
-        targetSdk 32
+        targetSdk 30
         versionCode 1
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildFeatures {
+        viewBinding = true
+        dataBinding = true
     }
 
     buildTypes {
