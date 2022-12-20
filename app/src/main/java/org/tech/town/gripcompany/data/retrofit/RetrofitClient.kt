@@ -1,4 +1,4 @@
-package org.tech.town.gripcompany.retrofit
+package org.tech.town.gripcompany.data.retrofit
 
 import android.content.ContentValues.TAG
 import android.util.Log

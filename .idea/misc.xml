@@ -8,7 +8,9 @@
         <entry key="..\:/FastCampus/GripCompany/app/src/main/res/layout/activity_main.xml" value="0.36614583333333334" />
         <entry key="..\:/FastCampus/GripCompany/app/src/main/res/layout/fragment_favorite.xml" value="0.2734375" />
         <entry key="..\:/FastCampus/GripCompany/app/src/main/res/layout/fragment_search.xml" value="0.2734375" />
+        <entry key="..\:/FastCampus/GripCompany/app/src/main/res/layout/item_search.xml" value="0.22395833333333334" />
         <entry key="..\:/FastCampus/GripCompany/app/src/main/res/menu/menu_tab.xml" value="0.3651041666666667" />
+        <entry key="..\:/FastCampus/GripCompany/app/src/main/res/menu/search.xml" value="0.225" />
       </map>
     </option>
   </component>

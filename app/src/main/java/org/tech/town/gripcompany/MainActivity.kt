@@ -2,7 +2,9 @@ package org.tech.town.gripcompany
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import org.tech.town.gripcompany.adapter.SearchAdapter
 import org.tech.town.gripcompany.data.api.MovieApi
 import org.tech.town.gripcompany.databinding.ActivityMainBinding
 import org.tech.town.gripcompany.presentation.FavoriteFragment
@@ -16,8 +18,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater) // 바인딩 객체 획득
-        setContentView(binding.root) // 액티비티 화면 출력 or getRoot()
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
         initBottomNavigation()
 

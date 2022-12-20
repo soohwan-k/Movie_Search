@@ -12,6 +12,6 @@ interface MovieApi {
     fun getSearchResponses(
         @Query(value = "apiKey") apiKey: String,
         @Query(value = "s") s: String,
-    ): Call<JsonElement>
+    ): Call<SearchResponse>
 
 }
