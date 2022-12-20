@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import org.tech.town.gripcompany.data.model.Search
 import org.tech.town.gripcompany.databinding.ItemSearchBinding
 
@@ -16,11 +17,25 @@ class SearchAdapter : ListAdapter<Search, SearchAdapter.SearchItemViewHolder>(di
 
         fun bind(searchModel: Search) {
             binding.titleTextView.text = searchModel.Title
+            binding.yearTextView.text = searchModel.Year
+            binding.typeTextView.text = searchModel.Type
+
+            Glide
+                .with(binding.posterImageView.context)
+                .load(searchModel.Poster)
+                .into(binding.posterImageView)
+
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchItemViewHolder {
-        return SearchItemViewHolder(ItemSearchBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+        return SearchItemViewHolder(
+            ItemSearchBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
+        )
     }
 
     override fun onBindViewHolder(holder: SearchItemViewHolder, position: Int) {
