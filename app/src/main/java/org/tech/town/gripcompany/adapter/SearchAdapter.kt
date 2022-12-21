@@ -12,6 +12,8 @@ import org.tech.town.gripcompany.databinding.ItemSearchBinding
 
 class SearchAdapter : ListAdapter<Search, SearchAdapter.SearchItemViewHolder>(diffUtil) {
 
+
+
     inner class SearchItemViewHolder(private val binding: ItemSearchBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
@@ -36,13 +38,14 @@ class SearchAdapter : ListAdapter<Search, SearchAdapter.SearchItemViewHolder>(di
                 false
             )
         )
+
     }
 
     override fun onBindViewHolder(holder: SearchItemViewHolder, position: Int) {
         holder.bind(currentList[position])
     }
 
-    //
+
     companion object {
         val diffUtil = object : DiffUtil.ItemCallback<Search>() {
             override fun areItemsTheSame(oldItem: Search, newItem: Search): Boolean {

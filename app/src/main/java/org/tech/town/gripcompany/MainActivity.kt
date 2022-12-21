@@ -4,13 +4,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import org.tech.town.gripcompany.adapter.SearchAdapter
-import org.tech.town.gripcompany.data.api.MovieApi
 import org.tech.town.gripcompany.databinding.ActivityMainBinding
-import org.tech.town.gripcompany.presentation.FavoriteFragment
-import org.tech.town.gripcompany.presentation.SearchFragment
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
+import org.tech.town.gripcompany.presentation.favorite.FavoriteFragment
+import org.tech.town.gripcompany.presentation.search.SearchFragment
 
 class MainActivity : AppCompatActivity() {
 
