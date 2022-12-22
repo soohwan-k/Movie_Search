@@ -13,10 +13,13 @@ import org.tech.town.gripcompany.databinding.ItemSearchBinding
 class SearchAdapter : RecyclerView.Adapter<SearchAdapter.SearchItemViewHolder>() {
 
     private var searchList = listOf<Search>()
+    private lateinit var listener: OnItemClickListener
+
+
+
 
     class SearchItemViewHolder(val binding: ItemSearchBinding) :
         RecyclerView.ViewHolder(binding.root)
-
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchItemViewHolder {
@@ -30,6 +33,7 @@ class SearchAdapter : RecyclerView.Adapter<SearchAdapter.SearchItemViewHolder>()
 
     }
 
+
     override fun onBindViewHolder(holder: SearchItemViewHolder, position: Int) {
         holder.binding.titleTextView.text = searchList[position].Title
         holder.binding.yearTextView.text = searchList[position].Year
@@ -38,6 +42,16 @@ class SearchAdapter : RecyclerView.Adapter<SearchAdapter.SearchItemViewHolder>()
             .with(holder.binding.posterImageView.context)
             .load(searchList[position].Poster)
             .into(holder.binding.posterImageView)
+
+        holder.itemView.setOnClickListener {
+            listener.onClick(it, position)
+        }
+
+
+    }
+
+    fun setItemClickListener(listener: OnItemClickListener) {
+        this.listener = listener
     }
 
     override fun getItemCount(): Int {
@@ -51,9 +65,5 @@ class SearchAdapter : RecyclerView.Adapter<SearchAdapter.SearchItemViewHolder>()
         notifyDataSetChanged()
     }
 
-    companion object{
-        const val ITEM = 0
-        const val EMPTY = 1
-    }
 
 }

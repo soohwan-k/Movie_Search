@@ -2,6 +2,7 @@ package org.tech.town.gripcompany.presentation.search
 
 
 import android.content.ContentValues.TAG
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.KeyEvent
@@ -10,11 +11,16 @@ import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import org.tech.town.gripcompany.Constants.Companion.API_KEY
+import org.tech.town.gripcompany.MainActivity
+import org.tech.town.gripcompany.adapter.OnItemClickListener
 import org.tech.town.gripcompany.adapter.SearchAdapter
+import org.tech.town.gripcompany.data.database.AppDatabase
 import org.tech.town.gripcompany.data.model.Search
 import org.tech.town.gripcompany.data.repository.MovieRepository
 import org.tech.town.gripcompany.databinding.FragmentSearchBinding
@@ -27,9 +33,19 @@ class SearchFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var adapter: SearchAdapter
     private var responseList = arrayListOf<Search>()
-    private var pagingList = arrayListOf<Search>()
+    var pagingList = arrayListOf<Search>()
     private lateinit var searchWord: String
     private var page = 1
+    private lateinit var db: AppDatabase
+
+    lateinit var mainActivity: MainActivity
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+
+        mainActivity = context as MainActivity
+    }
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -43,12 +59,18 @@ class SearchFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        db = AppDatabase.getInstance(mainActivity)!!
+
         initSearchRecyclerView()
         initViewModel()
         searchEnter()
         paging()
+        listClick()
+
+
 
     }
+
 
     private fun search(keyword: String, page: Int) {
         viewModel.getSearchResponse(API_KEY, keyword, page)
@@ -122,6 +144,55 @@ class SearchFragment : Fragment() {
                 return@setOnKeyListener true
             }
             return@setOnKeyListener false
+        }
+    }
+
+    private fun listClick(){
+        adapter.setItemClickListener(object: OnItemClickListener {
+            override fun onClick(v: View, position: Int) {
+                checkFavorite()
+                if (pagingList[position].isFavorite) {
+                    unDoFavoritePopup(position)
+                }else{
+                    doFavoritePopup(position)
+                }
+            }
+        })
+    }
+
+    private fun doFavoritePopup(position: Int) {
+        AlertDialog.Builder(mainActivity)
+            .setTitle("즐겨찾기를 하시겠습니까")
+            .setPositiveButton("즐겨찾기"){_,_ ->
+                pagingList[position].isFavorite = true
+                db.favoriteDao().insert(pagingList[position])
+            }
+            .setNegativeButton("취소") {_, _ ->}
+            .create()
+            .show()
+    }
+
+    private fun unDoFavoritePopup(position: Int) {
+        AlertDialog.Builder(mainActivity)
+            .setTitle("즐겨찾기를 취소 하시겠습니까")
+            .setPositiveButton("즐겨찾기 취소"){_, _ ->
+                pagingList[position].isFavorite = false
+                db.favoriteDao().delete(pagingList[position])
+            }
+            .setNegativeButton("취소") {_, _ ->}
+            .create()
+            .show()
+    }
+
+    private fun checkFavorite(){
+        val list = db.favoriteDao().getAll()
+        for (i in 0 until pagingList.size){
+            for(j in list.indices){
+                if (pagingList[i].imdbID == list[j].imdbID){
+                    pagingList[i].isFavorite = true
+                }
+            }
+
         }
     }
 
