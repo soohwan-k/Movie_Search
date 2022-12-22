@@ -4,6 +4,9 @@
     <!-- main -->
     <string name="no_search">검색 결과가 없습니다.</string>
 
+    <!-- favorite -->
+    <string name="my_favorite">내 즐겨찾기</string>
+
     <!-- menu_tab -->
     <string name="search_tab_title">검색</string>
     <string name="favorite_tab_title">즐겨찾기</string>

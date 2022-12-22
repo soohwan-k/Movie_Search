@@ -11,7 +11,6 @@ import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -66,7 +65,6 @@ class SearchFragment : Fragment() {
         searchEnter()
         paging()
         listClick()
-
 
 
     }
@@ -147,13 +145,13 @@ class SearchFragment : Fragment() {
         }
     }
 
-    private fun listClick(){
-        adapter.setItemClickListener(object: OnItemClickListener {
+    private fun listClick() {
+        adapter.setItemClickListener(object : OnItemClickListener {
             override fun onClick(v: View, position: Int) {
                 checkFavorite()
                 if (pagingList[position].isFavorite) {
                     unDoFavoritePopup(position)
-                }else{
+                } else {
                     doFavoritePopup(position)
                 }
             }
@@ -163,11 +161,11 @@ class SearchFragment : Fragment() {
     private fun doFavoritePopup(position: Int) {
         AlertDialog.Builder(mainActivity)
             .setTitle("즐겨찾기를 하시겠습니까")
-            .setPositiveButton("즐겨찾기"){_,_ ->
+            .setPositiveButton("즐겨찾기") { _, _ ->
                 pagingList[position].isFavorite = true
                 db.favoriteDao().insert(pagingList[position])
             }
-            .setNegativeButton("취소") {_, _ ->}
+            .setNegativeButton("취소") { _, _ -> }
             .create()
             .show()
     }
@@ -175,20 +173,20 @@ class SearchFragment : Fragment() {
     private fun unDoFavoritePopup(position: Int) {
         AlertDialog.Builder(mainActivity)
             .setTitle("즐겨찾기를 취소 하시겠습니까")
-            .setPositiveButton("즐겨찾기 취소"){_, _ ->
+            .setPositiveButton("즐겨찾기 취소") { _, _ ->
                 pagingList[position].isFavorite = false
                 db.favoriteDao().delete(pagingList[position])
             }
-            .setNegativeButton("취소") {_, _ ->}
+            .setNegativeButton("취소") { _, _ -> }
             .create()
             .show()
     }
 
-    private fun checkFavorite(){
+    private fun checkFavorite() {
         val list = db.favoriteDao().getAll()
-        for (i in 0 until pagingList.size){
-            for(j in list.indices){
-                if (pagingList[i].imdbID == list[j].imdbID){
+        for (i in 0 until pagingList.size) {
+            for (j in list.indices) {
+                if (pagingList[i].imdbID == list[j].imdbID) {
                     pagingList[i].isFavorite = true
                 }
             }
