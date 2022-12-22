@@ -1,6 +1,7 @@
 package org.tech.town.gripcompany.presentation.search
 
 
+import android.content.ContentValues.TAG
 import android.os.Bundle
 import android.util.Log
 import android.view.KeyEvent
@@ -28,8 +29,6 @@ class SearchFragment : Fragment() {
     private var responseList = arrayListOf<Search>()
     private var pagingList = arrayListOf<Search>()
     private lateinit var searchWord: String
-    private var totalResults: Int = 0
-    private var totalPage = 0
     private var page = 1
 
     override fun onCreateView(
@@ -45,38 +44,34 @@ class SearchFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         initSearchRecyclerView()
-
+        initViewModel()
         searchEnter()
         paging()
 
     }
 
     private fun search(keyword: String, page: Int) {
-        initViewModel()
         viewModel.getSearchResponse(API_KEY, keyword, page)
         viewModel.searchResponse.observe(viewLifecycleOwner) {
             responseList.clear()
-            responseList = it.body()?.Search as ArrayList<Search>
+            responseList = (it.body()?.Search ?: arrayListOf<Search>()) as ArrayList<Search>
+
             pagingList += responseList
 
             if (page == 1) {
                 if (it.isSuccessful) {
-                    if (responseList.isEmpty()) {
+                    adapter.setData(pagingList)
+                    if (adapter.itemCount == 0) {
                         binding.noSearchTextView.visibility = View.VISIBLE
-                        adapter.setData(responseList)
                     } else {
                         binding.noSearchTextView.visibility = View.INVISIBLE
-                        adapter.setData(responseList)
-                        Log.d("TAGTAG", "page=1 paging $pagingList")
-                        Log.d("TAGTAG", "page=1 response $responseList")
                     }
+
                 } else {
-                    Log.d("TAGTAG", "search: ${it.errorBody().toString()}")
+                    Log.d(TAG, "search: ${it.errorBody().toString()}")
                 }
             } else {
                 adapter.setData(pagingList)
-                Log.d("TAGTAG", "page!=1 paging $pagingList")
-                Log.d("TAGTAG", "page!=1 response $responseList")
 
             }
 
@@ -84,9 +79,6 @@ class SearchFragment : Fragment() {
 
 
     }
-
-
-
 
 
     private fun paging() {
@@ -101,7 +93,6 @@ class SearchFragment : Fragment() {
                 //페이징 처리
                 if (recyclerViewPosition == totalCount) {
                     page++
-                    Log.d("TAGTAG", "onScrolled: paging $page")
                     search(searchWord, page)
 
                 }

@@ -18,6 +18,7 @@ class SearchAdapter : RecyclerView.Adapter<SearchAdapter.SearchItemViewHolder>()
         RecyclerView.ViewHolder(binding.root)
 
 
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchItemViewHolder {
         return SearchItemViewHolder(
             ItemSearchBinding.inflate(
@@ -50,5 +51,9 @@ class SearchAdapter : RecyclerView.Adapter<SearchAdapter.SearchItemViewHolder>()
         notifyDataSetChanged()
     }
 
+    companion object{
+        const val ITEM = 0
+        const val EMPTY = 1
+    }
 
 }

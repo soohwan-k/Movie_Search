@@ -18,4 +18,6 @@ class MainViewModel(private val movieRepository: MovieRepository) : ViewModel() 
             searchResponse.value = response
         }
     }
+
+
 }
