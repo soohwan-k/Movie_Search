@@ -11,6 +11,7 @@ import retrofit2.Response
 class MainViewModel(private val movieRepository: MovieRepository) : ViewModel() {
     val searchResponse: MutableLiveData<Response<SearchResponse>> = MutableLiveData()
 
+
     fun getSearchResponse(apiKey: String, s: String, page: Int) {
         viewModelScope.launch {
             val response = movieRepository.getSearchResponses(apiKey, s, page)
