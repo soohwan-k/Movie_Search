@@ -20,11 +20,9 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-
-
     // BottomNavigation 초기화 및 선택 버튼 설정 함수
     private fun initBottomNavigation() {
-        binding.bottomNavigation.run {
+        binding.bottomNavigation.apply {
             setOnItemSelectedListener {
                 when (it.itemId) {
                     R.id.searchTab -> changeFragment(SearchFragment())

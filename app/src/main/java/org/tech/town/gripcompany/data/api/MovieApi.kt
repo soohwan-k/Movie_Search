@@ -14,5 +14,4 @@ interface MovieApi {
         @Query(value = "s") s: String,
         @Query(value = "page") page: Int
     ): Response<SearchResponse>
-
 }

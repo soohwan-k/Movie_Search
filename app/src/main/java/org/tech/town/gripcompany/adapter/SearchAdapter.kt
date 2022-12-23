@@ -15,12 +15,8 @@ class SearchAdapter : RecyclerView.Adapter<SearchAdapter.SearchItemViewHolder>()
     private var searchList = listOf<Search>()
     private lateinit var listener: OnItemClickListener
 
-
-
-
     class SearchItemViewHolder(val binding: ItemSearchBinding) :
         RecyclerView.ViewHolder(binding.root)
-
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchItemViewHolder {
         return SearchItemViewHolder(
@@ -30,24 +26,22 @@ class SearchAdapter : RecyclerView.Adapter<SearchAdapter.SearchItemViewHolder>()
                 false
             )
         )
-
     }
 
-
     override fun onBindViewHolder(holder: SearchItemViewHolder, position: Int) {
-        holder.binding.titleTextView.text = searchList[position].Title
-        holder.binding.yearTextView.text = searchList[position].Year
-        holder.binding.typeTextView.text = searchList[position].Type
-        Glide
-            .with(holder.binding.posterImageView.context)
-            .load(searchList[position].Poster)
-            .into(holder.binding.posterImageView)
+        holder.binding.apply {
+            titleTextView.text = searchList[position].Title
+            yearTextView.text = searchList[position].Year
+            typeTextView.text = searchList[position].Type
+
+            Glide.with(posterImageView.context)
+                .load(searchList[position].Poster)
+                .into(posterImageView)
+        }
 
         holder.itemView.setOnClickListener {
             listener.onClick(it, position)
         }
-
-
     }
 
     fun setItemClickListener(listener: OnItemClickListener) {
@@ -58,12 +52,9 @@ class SearchAdapter : RecyclerView.Adapter<SearchAdapter.SearchItemViewHolder>()
         return searchList.size
     }
 
-
     @SuppressLint("NotifyDataSetChanged")
     fun setData(newList: List<Search>) {
         searchList = newList
         notifyDataSetChanged()
     }
-
-
 }

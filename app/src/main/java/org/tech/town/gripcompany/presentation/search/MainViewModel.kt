@@ -9,8 +9,8 @@ import org.tech.town.gripcompany.data.repository.MovieRepository
 import retrofit2.Response
 
 class MainViewModel(private val movieRepository: MovieRepository) : ViewModel() {
-    val searchResponse: MutableLiveData<Response<SearchResponse>> = MutableLiveData()
 
+    val searchResponse: MutableLiveData<Response<SearchResponse>> = MutableLiveData()
 
     fun getSearchResponse(apiKey: String, s: String, page: Int) {
         viewModelScope.launch {
@@ -18,6 +18,4 @@ class MainViewModel(private val movieRepository: MovieRepository) : ViewModel() 
             searchResponse.value = response
         }
     }
-
-
 }
