@@ -17,4 +17,7 @@ interface FavoriteDao {
 
     @Delete
     fun delete(search: Search)
+
+    @Query("DELETE FROM SEARCH")
+    fun deleteAll()
 }

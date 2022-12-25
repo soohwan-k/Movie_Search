@@ -111,7 +111,7 @@ class SearchFragment : Fragment() {
     }
 
     private fun initSearchRecyclerView() {
-        adapter = SearchAdapter()
+        adapter = SearchAdapter(mainActivity)
         binding.searchRecyclerView.layoutManager = LinearLayoutManager(context)
         binding.searchRecyclerView.adapter = adapter
     }

@@ -2,18 +2,21 @@ package org.tech.town.gripcompany.adapter
 
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import org.tech.town.gripcompany.data.database.AppDatabase
 import org.tech.town.gripcompany.data.model.Search
 import org.tech.town.gripcompany.databinding.ItemSearchBinding
 
+class SearchAdapter(context: Context) : RecyclerView.Adapter<SearchAdapter.SearchItemViewHolder>(), ItemTouchHelperListener {
 
-class SearchAdapter : RecyclerView.Adapter<SearchAdapter.SearchItemViewHolder>() {
-
-    private var searchList = listOf<Search>()
+    private var searchList = arrayListOf<Search>()
     private lateinit var listener: OnItemClickListener
+
+    private var db = AppDatabase.getInstance(context)!!
 
     class SearchItemViewHolder(val binding: ItemSearchBinding) :
         RecyclerView.ViewHolder(binding.root)
@@ -48,13 +51,24 @@ class SearchAdapter : RecyclerView.Adapter<SearchAdapter.SearchItemViewHolder>()
         this.listener = listener
     }
 
-    override fun getItemCount(): Int {
-        return searchList.size
-    }
+    override fun getItemCount(): Int = searchList.size
 
     @SuppressLint("NotifyDataSetChanged")
-    fun setData(newList: List<Search>) {
+    fun setData(newList: ArrayList<Search>) {
         searchList = newList
         notifyDataSetChanged()
     }
+
+    override fun onItemMove(from: Int, to: Int) {
+        val item: Search = searchList[from]
+        db.favoriteDao().deleteAll()
+        searchList.removeAt(from)
+        searchList.add(to, item)
+        for (i in searchList){
+            db.favoriteDao().insert(i)
+        }
+
+        notifyItemMoved(from, to)
+    }
+
 }
