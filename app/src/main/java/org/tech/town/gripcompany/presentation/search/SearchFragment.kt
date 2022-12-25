@@ -12,6 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import org.tech.town.gripcompany.Constants.Companion.API_KEY
@@ -112,7 +113,7 @@ class SearchFragment : Fragment() {
 
     private fun initSearchRecyclerView() {
         adapter = SearchAdapter(mainActivity)
-        binding.searchRecyclerView.layoutManager = LinearLayoutManager(context)
+        binding.searchRecyclerView.layoutManager = GridLayoutManager(context, 2)
         binding.searchRecyclerView.adapter = adapter
     }
 

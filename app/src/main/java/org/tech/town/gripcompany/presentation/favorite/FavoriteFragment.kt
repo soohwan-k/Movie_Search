@@ -7,12 +7,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.ItemTouchHelper
-import androidx.recyclerview.widget.LinearLayoutManager
 import org.tech.town.gripcompany.MainActivity
 import org.tech.town.gripcompany.R
 import org.tech.town.gripcompany.adapter.ItemTouchCallback
-import org.tech.town.gripcompany.adapter.ItemTouchHelperListener
 import org.tech.town.gripcompany.adapter.OnItemClickListener
 import org.tech.town.gripcompany.adapter.SearchAdapter
 import org.tech.town.gripcompany.data.database.AppDatabase
@@ -60,7 +59,7 @@ class FavoriteFragment : Fragment(){
 
     private fun initSearchRecyclerView() {
         adapter = SearchAdapter(mainActivity)
-        binding.searchRecyclerView.layoutManager = LinearLayoutManager(context)
+        binding.searchRecyclerView.layoutManager = GridLayoutManager(context, 2)
         binding.searchRecyclerView.adapter = adapter
 
         itemTouchHelper.attachToRecyclerView(binding.searchRecyclerView)
