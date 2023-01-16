@@ -77,19 +77,17 @@ class SearchFragment : Fragment() {
 
             pagingList += responseList
 
-            if (page == 1) {
-                if (it.isSuccessful) {
-                    adapter.setData(pagingList)
-                    if (adapter.itemCount == 0) {
-                        binding.noSearchTextView.visibility = View.VISIBLE
-                    } else {
-                        binding.noSearchTextView.visibility = View.INVISIBLE
-                    }
+
+            if (it.isSuccessful) {
+                adapter.setData(pagingList)
+                if (adapter.itemCount == 0) {
+                    binding.noSearchTextView.visibility = View.VISIBLE
                 } else {
-                    Log.d(TAG, "search: ${it.errorBody().toString()}")
+                    binding.noSearchTextView.visibility = View.INVISIBLE
                 }
             } else {
-                adapter.setData(pagingList)
+                Log.d(TAG, "search: ${it.errorBody().toString()}")
+
             }
         }
     }
@@ -118,6 +116,7 @@ class SearchFragment : Fragment() {
     }
 
     private fun initViewModel() {
+        //repository 와 뷰모델 연결
         val repository = MovieRepository()
         val viewModelFactory = MainViewModelFactory(repository)
 
